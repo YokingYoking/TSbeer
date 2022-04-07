@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/cart_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/cartItem_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/cart_img"
+        android:layout_toRightOf="@+id/cart_img"
+        android:maxLines="1"
+        android:text="item_name"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/cart_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cartItem_name"
+        android:layout_alignStart="@+id/cartItem_name"
+        android:layout_alignLeft="@+id/cartItem_name"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:text="price"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">TSbeer</string>
+    <string name="title_home">List</string>
+    <string name="title_dashboard">Cart</string>
+    <string name="title_notifications">User</string>
+    <string name="addCartBtn">Add to Cart</string>
+    <string name="amount_tv">AMOUNT:</string>
+    <string name="total_item_price">TOTAL PRICE:</string>
+    <string name="toLogin">Login/Register</string>
+    <string name="detail_title">Detail</string>
+    <string name="login_title">Login</string>
+    <string name="login_account">Account</string>
+    <string name="login_account_hint">Please input account</string>
+    <string name="login_password">Password</string>
+    <string name="login_password_hint">Please enter password</string>
+    <string name="login_register_btn">Register</string>
+    <string name="login_login_btn">Login</string>
+    <string name="main_title">Home</string>
+    <string name="open_skip">Skip</string>
+    <string name="register_title">Register</string>
+    <string name="register_account">Account</string>
+    <string name="register_account_hint">Please input account</string>
+    <string name="register_name">Name</string>
+    <string name="register_name_hint">Please input name</string>
+    <string name="register_gender">Gender</string>
+    <string name="register_gender_man">Man</string>
+    <string name="register_gender_woman">Woman</string>
+    <string name="register_id_number">IdNumber</string>
+    <string name="register_id_number_hint">Please enter ID number</string>
+    <string name="register_id_number_error">Wrong ID number</string>
+    <string name="register_phone">Phone</string>
+    <string name="register_phone_hint">Please enter mobile phone</string>
+    <string name="register_address">Address</string>
+    <string name="register_address_hint">Please enter confirmation password</string>
+    <string name="register_password">Password</string>
+    <string name="register_password_hint">Please enter password</string>
+    <string name="register_confirmPassword">Confirm</string>
+    <string name="register_confirmPassword_hint">Please enter confirmation password</string>
+    <string name="register_back">Back to Login</string>
+    <string name="register_register_btn">Register</string>
+    <string name="login_wrong_password">wrong password</string>
+    <string name="login_inexistence">in existence</string>
+    <string name="register_same">password not the same</string>
+    <string name="registered_successfully">registered successfully</string>
+    <string name="register_exists">The account already exists</string>
+    <string name="register_nonage">Minors cannot be register</string>
+    <string name="login_first">Please Login First!</string>
+    <string name="nothing_in_cart">Nothing in the Cart!</string>
+    <string name="submit_order">Submit Order</string>
+    <string name="submit_dialog">Are you sure to submit the order?</string>
+    <string name="logout">LOGOUT</string>
+    <string-array name="amount">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+</resources>
