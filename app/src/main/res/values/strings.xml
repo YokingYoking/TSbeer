@@ -49,6 +49,7 @@
     <string name="submit_order">Submit Order</string>
     <string name="submit_dialog">Are you sure to submit the order?</string>
     <string name="logout">LOGOUT</string>
+    <string name="search_title">Search</string>
     <string-array name="amount">
         <item>1</item>
         <item>2</item>

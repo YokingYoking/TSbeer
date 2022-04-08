@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,11 +28,14 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class HomeFragment : Fragment() {
     // connectivity Manager instance
     lateinit var mConnMgr: ConnectivityManager
     lateinit var mitemListView: ListView
+    lateinit var mSearchView: SearchView
     private var list = ArrayList<Map<String, Any>>()
 
     private var _binding: FragmentHomeBinding? = null
@@ -61,6 +65,110 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mSearchView = binding.searchView
+        mSearchView.setIconified(false)
+        mSearchView.setSubmitButtonEnabled(true)
+        mSearchView.setQueryHint("Search item name...")
+        mSearchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String?): Boolean {
+                Log.i("CSDN_LQR", "TextSubmit : " + s)
+                val p:Pattern = Pattern.compile(s)
+                if(s == "") {
+                    val myListAdapter = activity?.let { MyListAdapter(it, list) }!!
+                    mitemListView.adapter = myListAdapter
+                    mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
+                        val itemAtPos = adapterView.getItemAtPosition(position)
+                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
+                        // Toast.makeText(activity, list.get(position).get("itemId").toString(), Toast.LENGTH_LONG).show()
+                        val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("itemId", list.get(position).get("itemId").toString())
+                        bundle.putString("name", list.get(position).get("name").toString())
+                        bundle.putString("price", list.get(position).get("price").toString())
+                        bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
+                        bundle.putString("stock", list.get(position).get("stock").toString())
+                        bundle.putString("description", list.get(position).get("description").toString())
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+                    return false
+                }
+                val filterItemList = ArrayList<Map<String, Any>>()
+                for (i in 0 until list.size) {
+                    val item = list.get(i)
+                    val matcher: Matcher = p.matcher(item.get("name").toString())
+                    if (matcher.find()) {
+                        filterItemList.add(item)
+                    }
+                    val myListAdapter = activity?.let { MyListAdapter(it, filterItemList) }!!
+                    mitemListView.adapter = myListAdapter
+                    mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
+                        val itemAtPos = adapterView.getItemAtPosition(position)
+                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
+                        val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("itemId", list.get(position).get("itemId").toString())
+                        bundle.putString("name", list.get(position).get("name").toString())
+                        bundle.putString("price", list.get(position).get("price").toString())
+                        bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
+                        bundle.putString("stock", list.get(position).get("stock").toString())
+                        bundle.putString("description", list.get(position).get("description").toString())
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+                }
+                return false
+            }
+            override fun onQueryTextChange(s: String?): Boolean {
+                Log.i("CSDN_LQR", "TextSubmit : " + s)
+                val p:Pattern = Pattern.compile(s)
+                if(s == "") {
+                    val myListAdapter = activity?.let { MyListAdapter(it, list) }!!
+                    mitemListView.adapter = myListAdapter
+                    mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
+                        val itemAtPos = adapterView.getItemAtPosition(position)
+                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
+                        // Toast.makeText(activity, list.get(position).get("itemId").toString(), Toast.LENGTH_LONG).show()
+                        val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("itemId", list.get(position).get("itemId").toString())
+                        bundle.putString("name", list.get(position).get("name").toString())
+                        bundle.putString("price", list.get(position).get("price").toString())
+                        bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
+                        bundle.putString("stock", list.get(position).get("stock").toString())
+                        bundle.putString("description", list.get(position).get("description").toString())
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+                    return false
+                }
+                val filterItemList = ArrayList<Map<String, Any>>()
+                for (i in 0 until list.size) {
+                    val item = list.get(i)
+                    val matcher: Matcher = p.matcher(item.get("name").toString())
+                    if (matcher.find()) {
+                        filterItemList.add(item)
+                    }
+                    val myListAdapter = activity?.let { MyListAdapter(it, filterItemList) }!!
+                    mitemListView.adapter = myListAdapter
+                    mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
+                        val itemAtPos = adapterView.getItemAtPosition(position)
+                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
+                        val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("itemId", list.get(position).get("itemId").toString())
+                        bundle.putString("name", list.get(position).get("name").toString())
+                        bundle.putString("price", list.get(position).get("price").toString())
+                        bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
+                        bundle.putString("stock", list.get(position).get("stock").toString())
+                        bundle.putString("description", list.get(position).get("description").toString())
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+                }
+                return false
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -150,7 +258,7 @@ class HomeFragment : Fragment() {
                                     Log.i("TESTJSON", "price=" + `object`.getDouble("price"))
                                     Log.i("TESTJSON", "imgUrl=" + `object`.getString("imgUrl"))
                                 }
-                                val myListAdapter = activity?.let { MyListAdapter(it, list) }
+                                val myListAdapter = activity?.let { MyListAdapter(it, list) }!!
                                 mitemListView.adapter = myListAdapter
                                 mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
                                     val itemAtPos = adapterView.getItemAtPosition(position)
