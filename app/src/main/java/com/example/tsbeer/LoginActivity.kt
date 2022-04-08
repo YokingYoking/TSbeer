@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var btnLogin: Button
     lateinit var mConnMgr: ConnectivityManager
     lateinit var myApp: MyApplication
+    var isSavePreference: Boolean = false
+    lateinit var mCheckBox: CheckBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +45,11 @@ class LoginActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.et_password)
         tvRegister = findViewById(R.id.tv_register)
         btnLogin = findViewById(R.id.btn_login)
+        mCheckBox = findViewById(R.id.checkBox)
+        mCheckBox.setOnClickListener(View.OnClickListener {
+            isSavePreference = mCheckBox.isChecked
+        })
+
         tvRegister.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
@@ -146,7 +150,11 @@ class LoginActivity : AppCompatActivity() {
                             if (myApp.name == "") {
                                 myApp.name = username
                             }
-                            savePreferences(username, password)
+                            if(isSavePreference) {
+                                savePreferences(username, password)
+                            } else {
+                                savePreferences("", "")
+                            }
                             finish()
                         } else {
                             Toast.makeText(this@LoginActivity, loginMessage, Toast.LENGTH_LONG).show()
