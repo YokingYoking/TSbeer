@@ -2,6 +2,7 @@ package com.example.tsbeer.ui.dashboard
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
@@ -13,8 +14,10 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.tsbeer.DetailActivity
 import com.example.tsbeer.MyApplication
 import com.example.tsbeer.R
+import com.example.tsbeer.SubmitActivity
 import com.example.tsbeer.databinding.FragmentDashboardBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
@@ -56,116 +59,34 @@ class DashboardFragment : Fragment() {
         mLoginFirst = binding.loginFirstTv
         mSubmitOrderBtn = binding.submitOrderBtn
         mSubmitOrderBtn.isEnabled = false
-        if (myApp.name == "") {
-             mLoginFirst.text = resources.getString(R.string.login_first)
-            mSubmitOrderBtn.isEnabled = false
-        } else {
-            // Store the Connectivity Manager in the member variable
-            mConnMgr = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            mCartListView = binding.cartListView
-            loadData()
-        }
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mSubmitOrderBtn.setOnClickListener{
-            context?.let { it1 ->
-                MaterialAlertDialogBuilder(it1)
-                    .setTitle(R.string.submit_order)
-                    .setMessage(R.string.submit_dialog)
-                    .setPositiveButton("OK") {dialog, which ->
-                        delData()
-                    }
-                    .setNegativeButton("CANCEL") {dialog, which ->
+            val intent = Intent(getActivity()?.getApplicationContext(), SubmitActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
-                    }
-                    .show()
-            }
+    override fun onStart() {
+        super.onStart()
+        if (myApp.name == "") {
+            mLoginFirst.text = resources.getString(R.string.login_first)
+            mSubmitOrderBtn.isEnabled = false
+        } else {
+            // Store the Connectivity Manager in the member variable
+            mConnMgr = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            mCartListView = binding.cartListView
+            list = ArrayList<Map<String, Any>>()
+            loadData()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun delData() {
-        //Website URL to which a network request will be sent
-        val path = "https://qcb22o.api.cloudendpoint.cn/clearCart"
-        //Bullet proofing test to make sure connection manager reference is not null
-        if (mConnMgr != null) {
-            // Get active network info
-            val networkInfo = mConnMgr!!.activeNetworkInfo
-            //If any activie network is available and inernet connection is available
-            if (networkInfo != null) { // && networkInfo.isConnected
-                //Start to data download by coroutine
-                delDataByCoroutines(path)
-            } else {
-                //If network is off of Internet is not availble, inform the user
-                Toast.makeText(activity, "Network Not Available", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun delDataByCoroutines(path: String) {
-        GlobalScope.launch(Dispatchers.IO) {
-            var data: String? = null
-            val inStream: InputStream
-            val outStream: OutputStream
-            // create a URL Connection object and set its parameters
-            val url = URL(path)
-            val urlConn = url.openConnection() as HttpURLConnection
-            try {
-                urlConn.connectTimeout = 5000
-                urlConn.readTimeout = 2500
-                // Set HTTP request method
-                urlConn.requestMethod = "POST"
-                urlConn.doInput = true
-                urlConn.doOutput = true
-                urlConn.setRequestProperty("Content-Type", "application/json;charset=utf-8")
-                //Perform network request
-                urlConn.connect()
-                val body =
-                    "{\"username\":" + "\""+ myApp.name + "\"" + "}"
-                outStream = urlConn.outputStream
-                val writer = BufferedWriter(OutputStreamWriter(outStream))
-                writer.write(body)
-                writer.close()
-                //After the network response,retrieve the input stream
-                inStream = urlConn.inputStream
-                // convert the input stream to String Bitmap
-                data = readStream(inStream)
-            } catch (e: MalformedURLException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } finally {
-                if (urlConn != null) {
-                    urlConn.disconnect()
-                }
-            }
-            launch(Dispatchers.Main) {
-                if (data != null) {
-                    try {
-                        val reader = JSONObject(data)
-                        val successBoolean: Boolean = reader.getBoolean("success")
-                        val msg: String = reader.getString("message")
-                        if (successBoolean) {
-                            mSubmitOrderBtn.isEnabled = false
-                            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show()
-                            loadData()
-                        } else {
-                            Toast.makeText(activity, "Request Wrong!", Toast.LENGTH_LONG).show()
-                        }
-
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-        }
     }
 
     private fun loadData() {

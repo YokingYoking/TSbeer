@@ -17,6 +17,9 @@
         android:theme="@style/Theme.TSbeer"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SubmitActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
