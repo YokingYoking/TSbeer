@@ -68,6 +68,11 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        loadPreferences()
+    }
+
     override fun onOptionsItemSelected(@NonNull item: MenuItem): Boolean {
         when (item.getItemId()) {
             android.R.id.home -> finish()
@@ -141,6 +146,7 @@ class LoginActivity : AppCompatActivity() {
                             if (myApp.name == "") {
                                 myApp.name = username
                             }
+                            savePreferences(username, password)
                             finish()
                         } else {
                             Toast.makeText(this@LoginActivity, loginMessage, Toast.LENGTH_LONG).show()
@@ -177,5 +183,15 @@ class LoginActivity : AppCompatActivity() {
         return data.toString()
     }
 
+    fun savePreferences(username: String, password: String) {
+        val pref = getSharedPreferences("TSbeer", Context.MODE_PRIVATE)
+        pref.edit().putString("username", username).commit()
+        pref.edit().putString("password", password).commit()
+    }
+    fun loadPreferences() {
+        val pref = getSharedPreferences("TSbeer", Context.MODE_PRIVATE)
+        etAccount.setText(pref.getString("username", ""))
+        etPassword.setText(pref.getString("password", ""))
+    }
 
 }
