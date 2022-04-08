@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="price"
-            android:textColor="@android:color/holo_orange_dark"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -40,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Stock" />
+            android:text="Stock"
+            android:textColor="?attr/colorPrimary" />
 
         <TextView
             android:id="@+id/descriptionTv"

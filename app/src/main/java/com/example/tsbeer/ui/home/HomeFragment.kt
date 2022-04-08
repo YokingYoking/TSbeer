@@ -103,8 +103,6 @@ class HomeFragment : Fragment() {
                     val myListAdapter = activity?.let { MyListAdapter(it, filterItemList) }!!
                     mitemListView.adapter = myListAdapter
                     mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
-                        val itemAtPos = adapterView.getItemAtPosition(position)
-                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
                         val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
                         val bundle = Bundle()
                         bundle.putString("itemId", list.get(position).get("itemId").toString())
@@ -126,9 +124,6 @@ class HomeFragment : Fragment() {
                     val myListAdapter = activity?.let { MyListAdapter(it, list) }!!
                     mitemListView.adapter = myListAdapter
                     mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
-                        val itemAtPos = adapterView.getItemAtPosition(position)
-                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
-                        // Toast.makeText(activity, list.get(position).get("itemId").toString(), Toast.LENGTH_LONG).show()
                         val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
                         val bundle = Bundle()
                         bundle.putString("itemId", list.get(position).get("itemId").toString())
@@ -151,17 +146,15 @@ class HomeFragment : Fragment() {
                     }
                     val myListAdapter = activity?.let { MyListAdapter(it, filterItemList) }!!
                     mitemListView.adapter = myListAdapter
-                    mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
-                        val itemAtPos = adapterView.getItemAtPosition(position)
-                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
+                    mitemListView.setOnItemClickListener{adapterView, view, position, id ->
                         val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
                         val bundle = Bundle()
-                        bundle.putString("itemId", list.get(position).get("itemId").toString())
-                        bundle.putString("name", list.get(position).get("name").toString())
-                        bundle.putString("price", list.get(position).get("price").toString())
-                        bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
-                        bundle.putString("stock", list.get(position).get("stock").toString())
-                        bundle.putString("description", list.get(position).get("description").toString())
+                        bundle.putString("itemId", filterItemList.get(position).get("itemId").toString())
+                        bundle.putString("name", filterItemList.get(position).get("name").toString())
+                        bundle.putString("price", filterItemList.get(position).get("price").toString())
+                        bundle.putString("imgUrl", filterItemList.get(position).get("imgUrl").toString())
+                        bundle.putString("stock", filterItemList.get(position).get("stock").toString())
+                        bundle.putString("description", filterItemList.get(position).get("description").toString())
                         intent.putExtras(bundle)
                         startActivity(intent)
                     }
@@ -261,8 +254,6 @@ class HomeFragment : Fragment() {
                                 val myListAdapter = activity?.let { MyListAdapter(it, list) }!!
                                 mitemListView.adapter = myListAdapter
                                 mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
-                                    val itemAtPos = adapterView.getItemAtPosition(position)
-                                    val itemIdAtPos = adapterView.getItemIdAtPosition(position)
                                     // Toast.makeText(activity, list.get(position).get("itemId").toString(), Toast.LENGTH_LONG).show()
                                     val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
                                     val bundle = Bundle()
