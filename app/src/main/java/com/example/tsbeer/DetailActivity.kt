@@ -32,6 +32,8 @@ class DetailActivity : AppCompatActivity() {
     lateinit var myApp: MyApplication
     lateinit var mStockTv: TextView
     lateinit var mDescriptionTv: TextView
+    lateinit var mRatingBar: RatingBar
+    lateinit var mScore: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,7 @@ class DetailActivity : AppCompatActivity() {
         val imgUrl = bundle.getString("imgUrl")!!
         val stock = bundle.getString("stock")!!
         val description = bundle.getString("description")
+        val score = bundle.getString("score")
 
         nameTV.text = name
         priceTV.text = "￥ " + price
@@ -95,7 +98,17 @@ class DetailActivity : AppCompatActivity() {
             override fun onNothingSelected(arg0: AdapterView<*>?) {}
         }
 
-
+        mRatingBar = findViewById(R.id.ratingBar)
+        if (score != null) {
+            mRatingBar.rating = score.toFloat()
+        }
+        mScore = findViewById(R.id.score)
+        mScore.text = score
+        mRatingBar.onRatingBarChangeListener =
+            RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                mScore.text = rating.toString()
+                Toast.makeText(this, "Rate Successfully", Toast.LENGTH_LONG).show()
+            }
     }
 
     override fun onOptionsItemSelected(@NonNull item: MenuItem): Boolean {

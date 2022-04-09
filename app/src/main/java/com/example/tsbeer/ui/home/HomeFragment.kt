@@ -71,54 +71,9 @@ class HomeFragment : Fragment() {
         mSearchView.setQueryHint("Search item name...")
         mSearchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
-                Log.i("CSDN_LQR", "TextSubmit : " + s)
-                val p:Pattern = Pattern.compile(s)
-                if(s == "") {
-                    val myListAdapter = activity?.let { MyListAdapter(it, list) }!!
-                    mitemListView.adapter = myListAdapter
-                    mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
-                        val itemAtPos = adapterView.getItemAtPosition(position)
-                        val itemIdAtPos = adapterView.getItemIdAtPosition(position)
-                        // Toast.makeText(activity, list.get(position).get("itemId").toString(), Toast.LENGTH_LONG).show()
-                        val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
-                        val bundle = Bundle()
-                        bundle.putString("itemId", list.get(position).get("itemId").toString())
-                        bundle.putString("name", list.get(position).get("name").toString())
-                        bundle.putString("price", list.get(position).get("price").toString())
-                        bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
-                        bundle.putString("stock", list.get(position).get("stock").toString())
-                        bundle.putString("description", list.get(position).get("description").toString())
-                        intent.putExtras(bundle)
-                        startActivity(intent)
-                    }
-                    return false
-                }
-                val filterItemList = ArrayList<Map<String, Any>>()
-                for (i in 0 until list.size) {
-                    val item = list.get(i)
-                    val matcher: Matcher = p.matcher(item.get("name").toString())
-                    if (matcher.find()) {
-                        filterItemList.add(item)
-                    }
-                    val myListAdapter = activity?.let { MyListAdapter(it, filterItemList) }!!
-                    mitemListView.adapter = myListAdapter
-                    mitemListView.setOnItemClickListener(){adapterView, view, position, id ->
-                        val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
-                        val bundle = Bundle()
-                        bundle.putString("itemId", list.get(position).get("itemId").toString())
-                        bundle.putString("name", list.get(position).get("name").toString())
-                        bundle.putString("price", list.get(position).get("price").toString())
-                        bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
-                        bundle.putString("stock", list.get(position).get("stock").toString())
-                        bundle.putString("description", list.get(position).get("description").toString())
-                        intent.putExtras(bundle)
-                        startActivity(intent)
-                    }
-                }
                 return false
             }
             override fun onQueryTextChange(s: String?): Boolean {
-                Log.i("CSDN_LQR", "TextSubmit : " + s)
                 val p:Pattern = Pattern.compile(s)
                 if(s == "") {
                     val myListAdapter = activity?.let { MyListAdapter(it, list) }!!
@@ -132,6 +87,7 @@ class HomeFragment : Fragment() {
                         bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
                         bundle.putString("stock", list.get(position).get("stock").toString())
                         bundle.putString("description", list.get(position).get("description").toString())
+                        bundle.putString("score", list.get(position).get("score").toString())
                         intent.putExtras(bundle)
                         startActivity(intent)
                     }
@@ -155,6 +111,7 @@ class HomeFragment : Fragment() {
                         bundle.putString("imgUrl", filterItemList.get(position).get("imgUrl").toString())
                         bundle.putString("stock", filterItemList.get(position).get("stock").toString())
                         bundle.putString("description", filterItemList.get(position).get("description").toString())
+                        bundle.putString("score", filterItemList.get(position).get("score").toString())
                         intent.putExtras(bundle)
                         startActivity(intent)
                     }
@@ -233,6 +190,7 @@ class HomeFragment : Fragment() {
                                         val imgUrl:String = `object`.getString("imgUrl")
                                         val description:String = `object`.getString("description")
                                         val stock: Int = `object`.getInt("stock")
+                                        val score: Double = `object`.getDouble("socre")
 
                                         map.put("itemId", itemId)
                                         map.put("name", name)
@@ -240,6 +198,7 @@ class HomeFragment : Fragment() {
                                         map.put("imgUrl", imgUrl)
                                         map.put("description", description)
                                         map.put("stock", stock)
+                                        map.put("score", score)
 
                                         list.add(map)
                                     } catch (e: Exception) {
@@ -263,6 +222,7 @@ class HomeFragment : Fragment() {
                                     bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
                                     bundle.putString("stock", list.get(position).get("stock").toString())
                                     bundle.putString("description", list.get(position).get("description").toString())
+                                    bundle.putString("score", list.get(position).get("score").toString())
                                     intent.putExtras(bundle)
                                     startActivity(intent)
                                 }
