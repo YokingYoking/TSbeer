@@ -179,29 +179,10 @@ class DashboardFragment : Fragment() {
                                         } catch (e: Exception) {
                                             e.printStackTrace()
                                         }
-                                        Log.i("TESTJSON", "----------------")
-                                        Log.i("TESTJSON", "id=" + `object`.getString("itemId"))
-                                        Log.i("TESTJSON", "name=" + `object`.getString("name"))
-                                        Log.i("TESTJSON", "price=" + `object`.getDouble("price"))
-                                        Log.i("TESTJSON", "imgUrl=" + `object`.getString("imgUrl"))
-                                        Log.i("TESTJSON", "amount=" + `object`.getInt("amount"))
                                     }
                                     val myListAdapter = activity?.let { CartListAdapter(it, list) }
                                     mCartListView.adapter = myListAdapter
                                     mSubmitOrderBtn.isEnabled = true
-//                                mCartListView.setOnItemClickListener(){adapterView, view, position, id ->
-//                                    val itemAtPos = adapterView.getItemAtPosition(position)
-//                                    val itemIdAtPos = adapterView.getItemIdAtPosition(position)
-//                                    // Toast.makeText(activity, list.get(position).get("itemId").toString(), Toast.LENGTH_LONG).show()
-//                                    val intent = Intent(getActivity()?.getApplicationContext(), DetailActivity::class.java)
-//                                    val bundle = Bundle()
-//                                    bundle.putString("itemId", list.get(position).get("itemId").toString())
-//                                    bundle.putString("name", list.get(position).get("name").toString())
-//                                    bundle.putString("price", list.get(position).get("price").toString())
-//                                    bundle.putString("imgUrl", list.get(position).get("imgUrl").toString())
-//                                    intent.putExtras(bundle)
-//                                    startActivity(intent)
-//                                }
                                 }
 
                             }
