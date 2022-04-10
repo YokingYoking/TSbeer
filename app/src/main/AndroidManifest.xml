@@ -17,6 +17,12 @@
         android:theme="@style/Theme.TSbeer"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ChangeNicknameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePwActivity"
+            android:exported="false" />
+        <activity
             android:name=".SubmitActivity"
             android:exported="false" />
         <activity

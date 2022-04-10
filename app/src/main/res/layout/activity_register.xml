@@ -1,40 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--线性布局  LinearLayout 根布局-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
-    <!--标题栏-->
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:paddingLeft="15dp"-->
-<!--        android:paddingRight="15dp"-->
-<!--        android:background="@color/purple_700">-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="25dp"-->
-<!--            android:layout_height="25dp"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:onClick="back"-->
-<!--            android:src="@drawable/ic_back" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_title"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:text="@string/register_title"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="16dp" />-->
-<!--    </RelativeLayout>-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--表单布局-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +18,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
-                <!--头像-->
                 <ImageView
                     android:id="@+id/iv_photo"
                     android:layout_width="100dp"
@@ -53,7 +25,6 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_default_man" />
             </RelativeLayout>
-            <!--账号-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +32,6 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:orientation="horizontal">
-                <!--TextView 文本  html的p标签-->
                 <TextView
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
@@ -80,7 +50,6 @@
                     android:singleLine="true"
                     android:hint="@string/register_account_hint"/>
             </LinearLayout>
-            <!--昵称-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +57,6 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:orientation="horizontal">
-                <!--TextView 文本  html的p标签-->
                 <TextView
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
@@ -115,7 +83,6 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:orientation="horizontal">
-                <!--TextView 文本  html的p标签-->
                 <TextView
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"

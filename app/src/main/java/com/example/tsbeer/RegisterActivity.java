@@ -80,6 +80,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String account;
     private String password;
+    private String nickname;
+    private String phone;
+    private String address;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,17 +128,17 @@ public class RegisterActivity extends AppCompatActivity {
                 String regex = "\\d{15}|\\d{17}[\\dxX]";
                 //获取请求参数
                 account = etAccount.getText().toString();
-                String nickName = etNickName.getText().toString();
+                nickname = etNickName.getText().toString();
                 String identityCard = etIdentityCard.getText().toString();
-                String phone = etPhone.getText().toString();
-                String address = etAddress.getText().toString();
+                phone = etPhone.getText().toString();
+                address = etAddress.getText().toString();
                 password = etPassword.getText().toString();
                 String passwordSure = etPasswordSure.getText().toString();
                 if ("".equals(account)) {//用户名不能为空
                     Toast.makeText(RegisterActivity.this,   R.string.register_account_hint, Toast.LENGTH_LONG).show();
                     return;
                 }
-                if ("".equals(nickName)) {//昵称不能为空
+                if ("".equals(nickname)) {//昵称不能为空
                     Toast.makeText(RegisterActivity.this, R.string.register_name_hint, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -251,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
     private class DownloadDataTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String...urls) {
-            return downloadData(urls[0], account, password);
+            return downloadData(urls[0], account, password, nickname, phone, address);
         }
 
         protected void onPostExecute(String data) {
@@ -277,7 +280,7 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
     }
 
-    public String downloadData(String path, String username, String password) {
+    public String downloadData(String path, String username, String password, String nickname, String phone, String address) {
         String data = null;
         InputStream inStream;
         OutputStream outStream;
@@ -293,7 +296,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             urlConn.connect();
             String body =
-                    "{\"username\":" + "\"" + username + "\"" + ",\"password\":" + "\"" + password + "\"}";
+                    "{\"username\":" + "\"" + username + "\"" + ",\"password\":" + "\"" + password + "\"," + "\"nickname\":"+ "\"" + nickname + "\"" + ",\"phone\":" + "\"" + phone + "\"" +",\"address\":" + "\"" + address + "\"" + "}";
             outStream = urlConn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream, "UTF-8"));
             writer.write(body);

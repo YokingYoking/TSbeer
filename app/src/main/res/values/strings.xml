@@ -56,6 +56,10 @@
     <string name="delete_btn">Delete</string>
     <string name="delete_dialog">Are you sure delete this item?</string>
     <string name="remember">Remember Me</string>
+    <string name="hello">Hello,</string>
+    <string name="submit">Submit</string>
+    <string name="change_info">Change Personal Info</string>
+    <string name="change_pw">Change Password</string>
     <string-array name="amount">
         <item>1</item>
         <item>2</item>
@@ -66,5 +70,9 @@
         <item>7</item>
         <item>8</item>
         <item>9</item>
+    </string-array>
+    <string-array name="user_function">
+        <item>Change Password</item>
+        <item>Change Personal Info</item>
     </string-array>
 </resources>
