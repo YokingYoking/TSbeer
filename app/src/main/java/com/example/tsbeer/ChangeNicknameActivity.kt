@@ -1,13 +1,13 @@
 package com.example.tsbeer
 
-import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
@@ -19,74 +19,41 @@ import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import java.util.*
 
+class ChangeNicknameActivity : AppCompatActivity() {
 
-/**
- * 登录页面
- */
-class LoginActivity : AppCompatActivity() {
-    lateinit var etAccount: EditText
-    lateinit var etPassword: EditText
-    lateinit var tvRegister: TextView
-    lateinit var btnLogin: Button
+    lateinit var etNickName: EditText
+    lateinit var etPhone: EditText
+    lateinit var etAddress: EditText
     lateinit var mConnMgr: ConnectivityManager
     lateinit var myApp: MyApplication
-    var isSavePreference: Boolean = false
-    lateinit var mCheckBox: CheckBox
-
+    lateinit var btnRegister: Button
+    lateinit var nickname: String
+    lateinit var phone: String
+    lateinit var address: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_change_nickname)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-        setTitle(getResources().getText(R.string.login_title))
-        mConnMgr = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        myApp = application as MyApplication
-        etAccount = findViewById(R.id.et_account)
-        etPassword = findViewById(R.id.et_password)
-        tvRegister = findViewById(R.id.tv_register)
-        btnLogin = findViewById(R.id.btn_login)
-        mCheckBox = findViewById(R.id.checkBox)
-        mCheckBox.setOnClickListener(View.OnClickListener {
-            isSavePreference = mCheckBox.isChecked
-        })
-
-        tvRegister.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-            startActivity(intent)
-        })
-
-        btnLogin.setOnClickListener(View.OnClickListener {
-            val account = etAccount.getText().toString()
-            val password = etPassword.getText().toString()
-            if ("" == account) { //用户名不能为空
-                Toast.makeText(this@LoginActivity, R.string.login_account_hint, Toast.LENGTH_LONG)
-                    .show()
-                return@OnClickListener
-            }
-            if ("" == password) { //密码为空
-                Toast.makeText(this@LoginActivity, R.string.login_password_hint, Toast.LENGTH_LONG)
-                    .show()
-                return@OnClickListener
-            }
-            loadData(account, password)
+        setTitle(getResources().getText(R.string.change_info))
+        mConnMgr = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        myApp = this.application as MyApplication
+        etNickName = findViewById(R.id.et_nickName2)
+        etPhone = findViewById(R.id.et_phone2)
+        etAddress = findViewById(R.id.et_address2)
+        btnRegister = findViewById(R.id.btn_register2)
+        btnRegister.setOnClickListener(View.OnClickListener {
+            nickname = etNickName.text.toString()
+            phone = etPhone.text.toString()
+            address = etAddress.text.toString()
+            loadData(nickname, phone, address)
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-        loadPreferences()
-    }
-
-    override fun onOptionsItemSelected(@NonNull item: MenuItem): Boolean {
-        when (item.getItemId()) {
-            android.R.id.home -> finish()
-        }
-        return true
-    }
-
-    private fun loadData(username: String, password: String) {
+    private fun loadData(nickname: String, phone: String, address: String) {
         //Website URL to which a network request will be sent
-        val path = "https://qcb22o.api.cloudendpoint.cn/login"
+        val path = "https://qcb22o.api.cloudendpoint.cn/changeInfo"
         //Bullet proofing test to make sure connection manager reference is not null
         if (mConnMgr != null) {
             // Get active network info
@@ -94,15 +61,15 @@ class LoginActivity : AppCompatActivity() {
             //If any activie network is available and inernet connection is available
             if (networkInfo != null) { // && networkInfo.isConnected
                 //Start to data download by coroutine
-                loadDataByCoroutines(path, username, password)
+                loadDataByCoroutines(path, nickname, phone, address)
             } else {
                 //If network is off of Internet is not availble, inform the user
-                Toast.makeText(this@LoginActivity, "Network Not Available", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@ChangeNicknameActivity, "Network Not Available", Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    private fun loadDataByCoroutines(path: String,username: String, password: String) {
+    private fun loadDataByCoroutines(path: String, nickname: String, phone: String, address: String) {
         GlobalScope.launch(Dispatchers.IO) {
             var data: String? = null
             val inStream: InputStream
@@ -121,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                 //Perform network request
                 urlConn.connect()
                 val body =
-                    "{\"username\":" + "\"" + username + "\"" + ",\"password\":" + "\"" + password + "\"}"
+                    "{\"username\":" + "\"" + myApp.name + "\"" + "," + "\"nickname\":"+ "\"" + nickname + "\"," + "\"phone\":" + "\"" + phone + "\"," +"\"address\":" + "\"" + address + "\"" + "}";
                 outStream = urlConn.outputStream
                 val writer = BufferedWriter(OutputStreamWriter(outStream))
                 writer.write(body)
@@ -146,22 +113,11 @@ class LoginActivity : AppCompatActivity() {
                         val successBoolean: Boolean = reader.getBoolean("success")
                         val loginMessage: String = reader.getString("message")
                         if (successBoolean) {
-                            Toast.makeText(this@LoginActivity, loginMessage, Toast.LENGTH_LONG).show()
-                            if (myApp.name == "") {
-                                val mapString: String = reader.getString("user")
-                                val userReader: JSONObject = JSONObject(mapString)
-                                val nickname: String = userReader.getString("nickname")
-                                myApp.name = username
-                                myApp.nickname = nickname
-                            }
-                            if(isSavePreference) {
-                                savePreferences(username, password)
-                            } else {
-                                savePreferences("", "")
-                            }
+                            myApp.nickname = nickname
+                            Toast.makeText(this@ChangeNicknameActivity, loginMessage, Toast.LENGTH_LONG).show()
                             finish()
                         } else {
-                            Toast.makeText(this@LoginActivity, loginMessage, Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@ChangeNicknameActivity, loginMessage, Toast.LENGTH_LONG).show()
                         }
 
                     } catch (e: JSONException) {
@@ -195,15 +151,11 @@ class LoginActivity : AppCompatActivity() {
         return data.toString()
     }
 
-    fun savePreferences(username: String, password: String) {
-        val pref = getSharedPreferences("TSbeer", Context.MODE_PRIVATE)
-        pref.edit().putString("username", username).commit()
-        pref.edit().putString("password", password).commit()
-    }
-    fun loadPreferences() {
-        val pref = getSharedPreferences("TSbeer", Context.MODE_PRIVATE)
-        etAccount.setText(pref.getString("username", ""))
-        etPassword.setText(pref.getString("password", ""))
+    override fun onOptionsItemSelected(@NonNull item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> finish()
+        }
+        return true
     }
 
 }
