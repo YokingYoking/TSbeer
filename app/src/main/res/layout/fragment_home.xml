@@ -26,7 +26,7 @@
         <ListView
             android:id="@+id/itemListView"
             android:layout_width="416dp"
-            android:layout_height="493dp" />
+            android:layout_height="562dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
