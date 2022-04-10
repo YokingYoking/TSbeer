@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:theme="@style/Theme.TSbeer">
 
     <ImageView
         android:id="@+id/cart_img"
@@ -48,5 +49,19 @@
         android:textColor="?attr/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_below="@id/cart_amount"
+        android:layout_alignStart="@+id/cart_price"
+        android:layout_alignLeft="@id/cartItem_name"
+        android:layout_marginStart="207dp"
+        android:layout_marginLeft="207dp"
+        android:layout_marginTop="2dp"
+        android:backgroundTint="#E85858"
+        android:text="@string/delete_btn"
+        android:textSize="10sp" />
 
 </RelativeLayout>

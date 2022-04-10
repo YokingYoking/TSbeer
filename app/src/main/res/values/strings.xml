@@ -53,6 +53,9 @@
     <string name="date_picker_btn">Please Pick a Date</string>
     <string name="deliver_date">Deliver Date:</string>
     <string name="not_selected">Not Selected Yet</string>
+    <string name="delete_btn">Delete</string>
+    <string name="delete_dialog">Are you sure delete this item?</string>
+    <string name="remember">Remember Me</string>
     <string-array name="amount">
         <item>1</item>
         <item>2</item>

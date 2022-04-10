@@ -118,7 +118,6 @@ class MyListAdapter(activity: FragmentActivity, itemList: ArrayList<Map<String, 
         var img: ImageView = view.findViewById(R.id.cart_img)
     }
 
-//返回过滤器
     fun getFilter(): MyFilter {
         mFilter = MyFilter()
         return mFilter
