@@ -86,6 +86,16 @@ class NotificationsFragment : Fragment() {
             mToLoginBtn.setOnClickListener {
                 myApp.name = ""
                 Toast.makeText(activity, "logout Successfully!", Toast.LENGTH_LONG).show()
+                mHelloTv.text =  resources.getString(R.string.hello) + "  " + resources.getString(R.string.login_first)
+                var nullArray = arrayOfNulls<String>(0)
+                var adapter = activity?.applicationContext?.let {
+                    ArrayAdapter(
+                        it,
+                        android.R.layout.simple_expandable_list_item_1,
+                        nullArray
+                    )
+                }
+                mUserFunctions.adapter = adapter
                 mToLoginBtn.text = resources.getString(R.string.toLogin)
                 mToLoginBtn.setOnClickListener {
                     val intent = Intent(getActivity()?.getApplicationContext(), LoginActivity::class.java)

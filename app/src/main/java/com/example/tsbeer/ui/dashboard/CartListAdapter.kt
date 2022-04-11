@@ -53,7 +53,7 @@ class CartListAdapter(activity: FragmentActivity, itemList: ArrayList<Map<String
             Handler().postDelayed(Runnable {
                 itemList?.removeAt(position)
                 notifyDataSetChanged()
-            }, 3000)
+            }, 1500)
         }
 
         holder.item_name.text = itemList?.get(position)?.get("name").toString()
